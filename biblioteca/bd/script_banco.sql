@@ -71,9 +71,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS editar_cliente;
 DELIMITER $$
 
-CREATE PROCEDURE editar_cliente(IN idCliente INT(10), rg INT(10), nome VARCHAR(60))
+CREATE PROCEDURE editar_cliente(IN id INT(10), rg INT(10), nome VARCHAR(60))
 BEGIN
-	UPDATE cliente SET rg=rg, nome=nome WHERE idCliente=idCliente;
+	UPDATE cliente SET rg=rg, nome=nome WHERE idCliente=id;
 END $$
 
 DELIMITER ;
@@ -83,9 +83,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS deletar_cliente;
 DELIMITER $$
 
-CREATE PROCEDURE deletar_cliente(IN idCliente INT(10))
+CREATE PROCEDURE deletar_cliente(IN id INT(10))
 BEGIN
-	DELETE FROM cliente WHERE idCliente=idCliente;
+	DELETE FROM cliente WHERE idCliente=id;
 END $$
 
 DELIMITER ;
@@ -95,9 +95,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS listar_cliente_por_id;
 DELIMITER $$
 
-CREATE PROCEDURE listar_cliente_por_id(IN idCliente INT(10))
+CREATE PROCEDURE listar_cliente_por_id(IN id INT(10))
 BEGIN
-	SELECT * FROM cliente WHERE idCliente=idCliente;
+	SELECT * FROM cliente WHERE idCliente=id;
 END $$
 
 DELIMITER ;
