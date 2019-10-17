@@ -3,7 +3,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
             <th>DESCRICAO</th>
             <th>QUANTIDADE</th>
             <th>EDITAR</th>
@@ -12,7 +11,6 @@
     </thead>
     <?php foreach ($produtos as $produto): ?>
     <tr>
-        <td><?=$produto['codProduto']?></td>
         <td><?=$produto['descricao']?></td>
         <td><?=$produto['quantidade']?></td>
         <td><a href="./produto/editar/<?=$produto['codProduto']?>">editar</a></td>
