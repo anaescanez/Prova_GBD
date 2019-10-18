@@ -20,4 +20,4 @@
 </table>
 
 <a href="./usuario/adicionar" class="btn btn-primary">Adicionar novo usuario</a>
-
+<a href="./paginas">Voltar ao menu</a>

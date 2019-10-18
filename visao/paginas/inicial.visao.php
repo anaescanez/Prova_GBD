@@ -1,4 +1,4 @@
-<a href="./usuario/adicionar">Usuario</a>
-<a href="./produto/adicionar">Produto</a>
-<a href="./usuario/adicionar">Item Venda</a>
-<a href="./usuario/adicionar">Venda</a>
+<a href="./usuario/listar">Usuario</a>
+<a href="./produto/listar">Produto</a>
+<a href="./venda/listar">Venda</a>
+<a href="./itemVenda/listar">Item Venda</a>

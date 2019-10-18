@@ -61,7 +61,7 @@ DELIMITER $$
 
 CREATE PROCEDURE listar_clientes()
 BEGIN
-	SELECT * FROM cliente;
+	SELECT * FROM cliente ORDER BY idCliente ASC;
 END $$
 
 DELIMITER ;
@@ -162,6 +162,140 @@ DELIMITER $$
 CREATE PROCEDURE listar_produto_por_id(IN v_codProduto INT(10))
 BEGIN
 	SELECT * FROM produto WHERE codProduto = v_codProduto;
+END $$
+
+DELIMITER ;
+
+
+
+
+
+
+
+-- Cadastro Venda--
+DROP PROCEDURE IF EXISTS cadastrar_venda;
+
+DELIMITER $$
+CREATE PROCEDURE cadastrar_venda(IN idCliente int(10), IN dataVenda date)
+BEGIN
+	IF(idCliente != "")AND(dataVenda != 0)THEN
+		INSERT INTO venda(idCliente, dataVenda) VALUES(idCliente, dataVenda);
+	ELSE 
+		SELECT "Você deve inserir um valor!" AS msg;
+	END IF;
+END $$
+DELIMITER ;
+
+
+-- Listar Venda--
+DROP PROCEDURE IF EXISTS listar_venda;
+DELIMITER $$
+
+CREATE PROCEDURE listar_venda()
+BEGIN
+	SELECT * FROM venda;
+END $$
+
+DELIMITER ;
+
+
+-- Editar Venda--
+DROP PROCEDURE IF EXISTS editar_venda;
+DELIMITER $$
+
+CREATE PROCEDURE editar_venda(IN codvenda INT(10),IN idCliente INT(10), IN dataVenda DATE)
+BEGIN
+	UPDATE venda SET idCliente=idCliente, dataVenda=dataVenda WHERE codvenda=codvenda;
+END $$
+
+DELIMITER ;
+
+
+-- Deletar Venda--
+DROP PROCEDURE IF EXISTS deletar_venda;
+DELIMITER $$
+
+CREATE PROCEDURE deletar_venda(IN codvenda INT(10))
+BEGIN
+	DELETE FROM venda WHERE codvenda=codvenda;
+END $$
+
+DELIMITER ;
+
+
+-- Listar por Id Venda--
+DROP PROCEDURE IF EXISTS listar_venda_por_id;
+DELIMITER $$
+
+CREATE PROCEDURE listar_venda_por_id(IN codvenda INT(10))
+BEGIN
+	SELECT * FROM venda WHERE codvenda=codvenda;
+END $$
+
+DELIMITER ;
+
+
+
+
+
+-- Cadastro itemVenda--
+DROP PROCEDURE IF EXISTS cadastrar_itemVenda;
+
+DELIMITER $$
+CREATE PROCEDURE cadastrar_itemVenda(IN quantidade int(10))
+BEGIN
+	IF(quantidade != "")THEN
+		INSERT INTO itemVenda(quantidade) VALUES(quantidade);
+	ELSE 
+		SELECT "Você deve inserir um valor!" AS msg;
+	END IF;
+END $$
+DELIMITER ;
+
+
+-- Listar itemVenda--
+DROP PROCEDURE IF EXISTS listar_itemVenda;
+DELIMITER $$
+
+CREATE PROCEDURE listar_itemVenda()
+BEGIN
+	SELECT * FROM itemVenda;
+END $$
+
+DELIMITER ;
+
+
+-- Editar itemVenda--
+DROP PROCEDURE IF EXISTS editar_itemVenda;
+DELIMITER $$
+
+CREATE PROCEDURE editar_itemVenda(IN codvenda INT(10), IN codProduto INT(10), IN quantidade INT(10))
+BEGIN
+	UPDATE itemVenda SET quantidade=quantidade WHERE codvenda=codvenda AND codProduto=codProduto;
+END $$
+
+DELIMITER ;
+
+
+-- Deletar itemVenda--
+DROP PROCEDURE IF EXISTS deletar_itemVenda;
+DELIMITER $$
+
+CREATE PROCEDURE deletar_itemVenda(IN codvenda INT(10), IN codProduto INT(10))
+BEGIN
+	DELETE FROM itemVenda WHERE codvenda=codvenda AND codProduto=codProduto;
+END $$
+
+DELIMITER ;
+
+
+-- Listar por Id itemVenda--
+DROP PROCEDURE IF EXISTS listar_itemVenda_por_id;
+DELIMITER $$
+
+CREATE PROCEDURE listar_itemVenda_por_id(IN codvenda INT(10), IN codProduto INT(10))
+BEGIN
+	SELECT * FROM itemVenda WHERE codvenda=codvenda AND codProduto=codProduto;
 END $$
 
 DELIMITER ;

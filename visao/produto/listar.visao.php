@@ -20,4 +20,4 @@
 </table>
 
 <a href="./produto/adicionar" class="btn btn-primary">Adicionar novo produto</a>
-
+<a href="./paginas">Voltar ao menu</a>
