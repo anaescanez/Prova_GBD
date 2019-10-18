@@ -1,4 +1,4 @@
-<h2>Listar Vendas todos</h2>
+<h2>Listar Vendas</h2>
 
 <table class="table" border="1">
     <thead>
@@ -21,4 +21,3 @@
 
 <a href="./venda/adicionar">Adicionar nova Venda</a>
 <a href="./paginas">Voltar ao menu</a>
-

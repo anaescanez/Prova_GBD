@@ -13,7 +13,7 @@ CREATE TABLE `Cliente` (
 
 
 CREATE TABLE `itemVenda` (
-  `codvenda` int(10) unsigned NOT NULL ,
+  `codVenda` int(10) unsigned NOT NULL ,
   `codProduto` int(10) unsigned NOT NULL,
   `quantidade` int(10) unsigned NOT NULL,
   PRIMARY KEY (`codvenda`,`codProduto`),
@@ -168,10 +168,6 @@ DELIMITER ;
 
 
 
-
-
-
-
 -- Cadastro Venda--
 DROP PROCEDURE IF EXISTS cadastrar_venda;
 
@@ -203,9 +199,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS editar_venda;
 DELIMITER $$
 
-CREATE PROCEDURE editar_venda(IN codvenda INT(10),IN idCliente INT(10), IN dataVenda DATE)
+CREATE PROCEDURE editar_venda(IN cod INT(10),IN id INT(10), IN dataVenda DATE)
 BEGIN
-	UPDATE venda SET idCliente=idCliente, dataVenda=dataVenda WHERE codvenda=codvenda;
+	UPDATE venda SET idCliente=id, dataVenda=dataVenda WHERE codvenda=cod;
 END $$
 
 DELIMITER ;
@@ -215,9 +211,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS deletar_venda;
 DELIMITER $$
 
-CREATE PROCEDURE deletar_venda(IN codvenda INT(10))
+CREATE PROCEDURE deletar_venda(IN cod INT(10))
 BEGIN
-	DELETE FROM venda WHERE codvenda=codvenda;
+	DELETE FROM venda WHERE codvenda=cod;
 END $$
 
 DELIMITER ;
@@ -242,10 +238,10 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS cadastrar_itemVenda;
 
 DELIMITER $$
-CREATE PROCEDURE cadastrar_itemVenda(IN quantidade int(10))
+CREATE PROCEDURE cadastrar_itemVenda(IN codVenda int(10), IN codProduto int(10), IN quantidade int(10))
 BEGIN
-	IF(quantidade != "")THEN
-		INSERT INTO itemVenda(quantidade) VALUES(quantidade);
+	IF(codVenda != "")AND(codProduto != "")AND(quantidade != "")THEN
+		INSERT INTO itemVenda(codVenda, codProduto, quantidade) VALUES(codVenda, codProduto, quantidade);
 	ELSE 
 		SELECT "Você deve inserir um valor!" AS msg;
 	END IF;
@@ -269,9 +265,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS editar_itemVenda;
 DELIMITER $$
 
-CREATE PROCEDURE editar_itemVenda(IN codvenda INT(10), IN codProduto INT(10), IN quantidade INT(10))
+CREATE PROCEDURE editar_itemVenda(IN codV INT(10), IN codP INT(10), IN quantidade INT(10))
 BEGIN
-	UPDATE itemVenda SET quantidade=quantidade WHERE codvenda=codvenda AND codProduto=codProduto;
+	UPDATE itemVenda SET quantidade=quantidade WHERE codvenda=codV AND codProduto=codP;
 END $$
 
 DELIMITER ;
@@ -281,9 +277,9 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS deletar_itemVenda;
 DELIMITER $$
 
-CREATE PROCEDURE deletar_itemVenda(IN codvenda INT(10), IN codProduto INT(10))
+CREATE PROCEDURE deletar_itemVenda(IN codV INT(10), IN codP INT(10))
 BEGIN
-	DELETE FROM itemVenda WHERE codvenda=codvenda AND codProduto=codProduto;
+	DELETE FROM itemVenda WHERE codvenda=codV AND codProduto=codP;
 END $$
 
 DELIMITER ;
@@ -293,9 +289,22 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS listar_itemVenda_por_id;
 DELIMITER $$
 
-CREATE PROCEDURE listar_itemVenda_por_id(IN codvenda INT(10), IN codProduto INT(10))
+CREATE PROCEDURE listar_itemVenda_por_id(IN codV INT(10), IN codP(10))
 BEGIN
-	SELECT * FROM itemVenda WHERE codvenda=codvenda AND codProduto=codProduto;
+	SELECT * FROM itemVenda WHERE codvenda=codV AND codProduto=codP;
 END $$
 
+DELIMITER ;
+
+
+-- TRIGGER --
+DROP TRIGGER IF EXISTS tgr_diminuireoque;
+DELIMITER $$
+CREATE TRIGGER tgr_diminuiestoque
+AFTER INSERT ON itemVenda
+FOR EACH ROW
+BEGIN
+update produto set produto.quantidade = produto.quantidade- New.quantidade
+where produto.codProduto = new.codProduto;
+END $$
 DELIMITER ;
